@@ -21,23 +21,37 @@
 
             
         
-            <form method="POST" action="/">
+        
              <button type="submit" class="position-absolute btn btn-primary btn-lg shadow" 
                     style="bottom: 100px; right: 50px;">
                 cagnotter</button>
 
                 <button id="btn-cagnotter" class="position-absolute btn btn-primary btn-lg shadow" 
                     style="bottom: 100px; right: 200px;">
-                Cagnotter 2 JS</button>
+                Cagnotter 2</button>
 
 
 
-                <button id="btn-cagnotter" class="position-absolute btn btn-primary btn-lg shadow" 
-                hx-get="/api/cagnotter2?montant=10&devise=euro" 
-            hx-target="#montant-cagnotte"
-                        style="bottom: 100px; right: 400px;">
-                Cagnotter 3</button>
-            </form>
-         </div>
+               
+
+        <div class="input-group position-absolute shadow" style="bottom: 100px; right: 400px; width: 300px;">
+    
+            <input type="number" 
+                name="montant" 
+                id="montant-saisie"
+                class="form-control bg-dark text-light border-secondary" 
+                placeholder="Montant" 
+                min="1" 
+                value="10">
+
+            <button class="btn btn-primary" 
+                    type="button"
+                    hx-get="/api/cagnotter2?devise=euro" 
+                    hx-include="#montant-saisie"
+                    hx-target="#montant-cagnotte">
+                Créditer
+            </button>
+            
+        </div>
     </body>
 </html>
