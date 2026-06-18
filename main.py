@@ -1,43 +1,37 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, redirect, render_template, request, jsonify, url_for
+from fonctions.cagnotte import initialiser_cagnotte
 
 app = Flask(__name__)
 
-def initialiser_cagnotte(montant, devise):
-    montant = int(montant)
-
-    symboles = {
-        "euro": "€",
-        "dollar": "$"
-    }
-
-    if devise.lower() not in symboles:
-        return {"succes": False, "erreur": "Devise invalide"}
-
-    symbole = symboles[devise.lower()]
-
-    if 1 <= montant <= 1000:
-        return {
-            "succes": True,
-            "cagnotte": montant,
-            "devise": symbole,
-            "message": f"Cagnotte creee : {montant} {symbole}"
-        }
-
-    return {"succes": False, "erreur": "Montant invalide"}
-
+cagnotte = 0
 
 # 🔥 API (reçoit les données du site)
 @app.route("/api/cagnotte")
-def cagnotte():
-    montant = request.args.get("montant")
+def cagnotter():
+    global cagnotte
+
+    montant = request.args.get("montant", default=0, type=int)
     devise = request.args.get("devise")
 
-    return jsonify(initialiser_cagnotte(montant, devise))
+    result = initialiser_cagnotte(cagnotte, montant, devise)
+    if result.get("success") is True:
+        cagnotte = result.get("cagnotte")
+
+    return jsonify(result)
 
 
 # 🔥 page web (HTML affiché)
-@app.route("/")
-def home():
-    return render_template('index.html')
+@app.route("/", methods=['GET', 'POST'])
+def home():   
+    global cagnotte
+
+    if request.method == 'POST':
+        # Si l'utilisateur a cliqué sur le bouton, on incrémente
+        cagnotte += 1
+        # On redirige vers la fonction 'home' pour rafraîchir proprement
+        return redirect(url_for('home')) # <--- C'est ici qu'on corrige !
+    
+    return render_template('index.html', cagnotteHtml=cagnotte)
+
 if __name__ == '__main__':
     app.run(debug=True)
