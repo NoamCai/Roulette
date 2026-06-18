@@ -19,6 +19,19 @@ def cagnotter():
 
     return jsonify(result)
 
+@app.route("/api/cagnotter2")
+def cagnotter2():
+    global cagnotte
+
+    montant = request.args.get("montant", default=0, type=int)
+    devise = request.args.get("devise")
+
+    result = initialiser_cagnotte(cagnotte, montant, devise)
+    if result.get("success") is True:
+        cagnotte = result.get("cagnotte")
+
+    return f"{cagnotte} €"
+
 
 # 🔥 page web (HTML affiché)
 @app.route("/", methods=['GET', 'POST'])

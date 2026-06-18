@@ -1,4 +1,5 @@
-def initialiser_cagnotte(montant, devise):
+def initialiser_cagnotte(cagnotteActuelle, montant, devise):
+    cagnotteActuelle = int(cagnotteActuelle)
     montant = int(montant)
 
     symboles = {
@@ -7,22 +8,17 @@ def initialiser_cagnotte(montant, devise):
     }
 
     if devise.lower() not in symboles:
-        return {
-            "succes": False,
-            "erreur": "Devise non supportée"
-        }
+        return {"success": False, "erreur": "Devise invalide"}
 
     symbole = symboles[devise.lower()]
 
     if 1 <= montant <= 1000:
+        cagnotteActuelle = cagnotteActuelle + montant;
         return {
-            "succes": True,
-            "message": f"Super ! Votre cagnotte est de {montant} {symbole}",
-            "cagnotte": montant,
-            "devise": symbole
+            "success": True,
+            "cagnotte": cagnotteActuelle,
+            "devise": symbole,
+            "message": f"Cagnotte creee : {montant} {symbole}"
         }
 
-    return {
-        "succes": False,
-        "erreur": "Montant doit être entre 1 et 1000"
-    }
+    return {"success": False, "erreur": "Montant invalide"}
