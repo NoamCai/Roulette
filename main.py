@@ -7,7 +7,6 @@ app = Flask(__name__)
 
 cagnotte = 0
 
-# 🔥 API (reçoit les données du site)
 @app.route("/api/cagnotte")
 def cagnotter():
     global cagnotte
@@ -34,8 +33,6 @@ def cagnotter2():
 
     return f"{cagnotte} €"
 
-
-# 🔥 page web (HTML affiché)
 @app.route("/", methods=['GET', 'POST'])
 def home():   
     global cagnotte
@@ -51,8 +48,15 @@ def home():
 if __name__ == '__main__':
     app.run(debug=True)
 
+<<<<<<< HEAD
 
 
+=======
+    from flask import Flask, jsonify
+import random
+
+app = Flask(__name__)
+>>>>>>> b91d1c0c6ae11cb66649bae8383360c109f2af90
 
 @app.route("/api/tirage")
 def tirage():
@@ -63,6 +67,10 @@ def tirage():
     })
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True, host="127.0.0.1")
 
 
+=======
+    app.run(debug=True, host="0.0.0.0")
+>>>>>>> b91d1c0c6ae11cb66649bae8383360c109f2af90

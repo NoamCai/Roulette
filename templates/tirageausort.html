@@ -1,0 +1,16 @@
+<h1>Roulette</h1>
+
+<button onclick="lancer()">Lancer la roulette</button>
+
+<h2 id="resultat">-</h2>
+
+<script>
+function lancer() {
+    fetch("/api/tirage")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("resultat").innerText =
+                "Résultat : " + data.resultat;
+        });
+}
+</script>
