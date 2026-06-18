@@ -51,6 +51,44 @@
                     hx-target="#montant-cagnotte">
                 Créditer
             </button>
+            <h1>Roulette</h1>
+
+<button onclick="lancer()">Lancer la roulette</button>
+
+<h2 id="resultat">-</h2>
+
+<script>
+function lancer() {
+    fetch("/api/tirage")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("resultat").innerText =
+                "Résultat : " + data.resultat;
+        });
+}
+</script>
+
+<div class="position-absolute form-check form-switch bg-secondary p-3 rounded-3 shadow" 
+     style="bottom: 100px; right: 750px; width: 200px; padding-left: 3.5em;">
+    
+    <input class="form-check-input" 
+           type="checkbox" 
+           role="switch" 
+           id="switch-pair-impair"
+           name="type_mise"
+           hx-get="/api/miser-type"
+           hx-trigger="change"
+           hx-target="#resultat-mise">
+           
+    <label class="form-check-label text-light fw-bold" for="switch-pair-impair">
+        Pair (ON) / Impair
+    </label>
+</div>
+
+<div id="resultat-mise" class="position-absolute text-info" style="bottom: 70px; right: 750px;"></div>
+
+
+
             
         </div>
     </body>

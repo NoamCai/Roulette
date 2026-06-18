@@ -1,5 +1,7 @@
 from flask import Flask, redirect, render_template, request, jsonify, url_for
 from fonctions.cagnotte import initialiser_cagnotte
+from flask import Flask, jsonify
+import random
 
 app = Flask(__name__)
 
@@ -48,3 +50,19 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+@app.route("/api/tirage")
+def tirage():
+    chiffre = random.randint(1, 36)
+
+    return jsonify({
+        "resultat": chiffre
+    })
+
+if __name__ == "__main__":
+    app.run(debug=True, host="127.0.0.1")
+
+
